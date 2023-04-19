@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Body,
   NotFoundException,
   Param,
@@ -32,5 +33,17 @@ export class UsersController {
   async createPost(@Body() body: { email: string; name: string }) {
     const { email, name } = body;
     return this.usersService.createUser({ email, name });
+  }
+
+  @Put(':id')
+  async updatePost(
+    @Param('id') id: string,
+    @Body() body: { email: string; name: string },
+  ) {
+    const { email, name } = body;
+    return this.usersService.updateUser({
+      where: { id: Number(id) },
+      data: { email, name },
+    });
   }
 }
